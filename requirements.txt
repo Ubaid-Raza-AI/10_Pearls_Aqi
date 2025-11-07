@@ -1,0 +1,14 @@
+openmeteo-requests
+requests-cache
+retry-requests
+hopsworks==4.2.2
+python-dotenv
+pandas
+scikit-learn 
+tensorflow 
+shap
+streamlit
+matplotlib
+confluent-kafka
+pyarrow
+joblib
