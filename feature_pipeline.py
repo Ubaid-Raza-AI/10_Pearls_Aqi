@@ -47,7 +47,7 @@ class AQIFeatureEngineer:
         df['day_of_week'] = df['date'].dt.dayofweek
         df['month'] = df['date'].dt.month
         df['day_of_month'] = df['date'].dt.day
-        df['is_weekend'] = (df['day_of_week'] >= 5).astype(int)
+        df['is_weekend'] = (df['day_of_week'] >= 5).astype(np.int32)
         df['season'] = df['month'].apply(lambda x: (x%12 + 3)//3)  # 1:Winter, 2:Spring, 3:Summer, 4:Fall
         
         # Cyclical encoding for time features
@@ -113,8 +113,8 @@ class AQIFeatureEngineer:
         df['aqi_momentum_24h'] = df['us_aqi'] - df['us_aqi'].shift(24)
         
         # Fill NaN values created by lag and rolling operations
-        # Forward fill for initial rows
-        df = df.fillna(method='ffill').fillna(method='bfill')
+        # Use ffill() and bfill() instead of deprecated fillna(method=...)
+        df = df.ffill().bfill()
         
         return df
 
@@ -362,23 +362,20 @@ class AQIFeaturePipeline:
 
 # ==================== MAIN EXECUTION ====================
 
-# Replace the entire if __name__ == "__main__": block with this
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="AQI Feature Pipeline")
     parser.add_argument('--mode', choices=['historical', 'recent'], default='historical',
-                        help="Mode: 'historical' for backfill or 'recent' for last 24h")
+                        help="Mode: 'historical' for backfill or 'recent' for last 5 days")
     args = parser.parse_args()
     
     try:
         pipeline = AQIFeaturePipeline()
         
         if args.mode == 'recent':
+            # Fetch last 5 days to have enough data for lag features and target variables
             yesterday = datetime.now() - timedelta(days=1)
             end_date = yesterday.strftime('%Y-%m-%d')
             start_date = (yesterday - timedelta(days=5)).strftime('%Y-%m-%d')
-
-            # end_date = datetime.now().strftime('%Y-%m-%d')
-            # start_date = (datetime.now() - timedelta(hours=24)).strftime('%Y-%m-%d')
             print(f"Running recent mode: {start_date} to {end_date}")
         else:  # historical
             start_date = "2023-01-01"
@@ -392,7 +389,7 @@ if __name__ == "__main__":
             version=1
         )
         
-        # Keep your existing display code here (SAMPLE FEATURES, etc.)
+        # Display sample features
         print("\n" + "="*60)
         print("SAMPLE FEATURES (first 5 rows):")
         print("="*60)
