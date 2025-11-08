@@ -357,7 +357,7 @@ PM10, PM2.5, CO, SO₂, NO₂, O₃, US AQI
 
 ### GitHub Actions Workflows
 
-**Feature Pipeline** (Hourly)
+**Feature Pipeline** (Daily)
 - Cron: `0 1 * * *`
 - Fetches last 5 days of data
 - Engineers and stores features
