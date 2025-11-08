@@ -373,8 +373,12 @@ if __name__ == "__main__":
         pipeline = AQIFeaturePipeline()
         
         if args.mode == 'recent':
-            end_date = datetime.now().strftime('%Y-%m-%d')
-            start_date = (datetime.now() - timedelta(hours=24)).strftime('%Y-%m-%d')
+            yesterday = datetime.now() - timedelta(days=1)
+            end_date = yesterday.strftime('%Y-%m-%d')
+            start_date = (yesterday - timedelta(hours=24)).strftime('%Y-%m-%d')
+
+            # end_date = datetime.now().strftime('%Y-%m-%d')
+            # start_date = (datetime.now() - timedelta(hours=24)).strftime('%Y-%m-%d')
             print(f"Running recent mode: {start_date} to {end_date}")
         else:  # historical
             start_date = "2023-01-01"
