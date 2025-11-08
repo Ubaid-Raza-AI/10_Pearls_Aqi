@@ -15,7 +15,7 @@ jobs:
           python-version: '3.10'
       - run: |
           pip install -r requirements.txt
-      - run: python inference_pipeline.py 
+      - run: python feature_pipeline.py --mode recent
         env:
           HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
           HOPSWORKS_PROJECT_NAME: ${{ secrets.HOPSWORKS_PROJECT_NAME }}
