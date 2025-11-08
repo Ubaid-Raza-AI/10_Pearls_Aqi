@@ -2,7 +2,7 @@ name: Daily Model Training
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Midnight UTC
+    - cron: '0 2 * * *'  # Midnight UTC
   workflow_dispatch:  # Manual trigger
 
 jobs:
