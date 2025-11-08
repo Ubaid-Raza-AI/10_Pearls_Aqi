@@ -204,7 +204,7 @@ with tab2:
             with cols[i]:
                 image_path = os.path.join(image_dir, f"{model_dir}_shap_bar.png")
                 if os.path.exists(image_path):
-                    st.image(image_path, caption=f"{model_dir} SHAP Bar Plot", use_column_width=True)
+                    st.image(image_path, caption=f"{model_dir} SHAP Bar Plot", use_container_width=True)
                 csv_path = os.path.join(csv_dir, f"{model_dir}_shap_values.csv")
                 if os.path.exists(csv_path):
                     df_shap = pd.read_csv(csv_path)
@@ -228,4 +228,4 @@ with tab3:
     """)
 
 st.markdown("---")
-st.markdown("*Serverless AQI Forecasting | xAI-Grok Assisted*")
+st.markdown("*Serverless AQI Forecasting *")
